@@ -13,6 +13,7 @@
   "description": "",
   "dependencies": {
     "@apollo/server": "^4.12.2",
+    "@as-integrations/express5": "^1.1.0",
     "@prisma/client": "^6.9.0",
     "graphql": "^16.11.0"
   },
