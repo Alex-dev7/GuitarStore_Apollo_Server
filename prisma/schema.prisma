@@ -20,4 +20,25 @@ model Product {
   description String
   price       Float
   createdAt   DateTime @default(now())
+  cartItems   CartItem[]
+}
+
+
+model User {
+  id       String   @id @default(cuid())
+  email    String   @unique
+  password String
+  name     String?
+  createdAt DateTime @default(now())
+  cart      CartItem[]
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
 }

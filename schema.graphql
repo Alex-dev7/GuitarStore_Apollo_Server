@@ -3,8 +3,26 @@
 type Query {
     getProducts: [Product!]!
     getProductByID(id: ID!): Product
+    getUserCart(userId: ID!): [CartItem!]!
+    getUsers: [User!]!
+    getUserById(id: ID!): User
 }
 
+# User ------------------------------- Schema
+type User {
+  id: ID!
+  email: String!
+  name: String
+  createdAt: String!
+  cart: [CartItem!]!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+# Product ------------------------------- Schema
 type Product {
     id: ID!
     name: String!
@@ -14,11 +32,40 @@ type Product {
     createdAt: String!
 }
 
+# CartItem ------------------------------- Schema
+type CartItem {
+  id: ID!
+  product: Product!
+  quantity: Int!
+  user: User!
+  createdAt: String!
+}
+
+
+
 type Mutation {
+    # Product Mutations
     createProduct(
         name: String!
         images: [String]
         description: String!
         price: Float!
     ): Product
+    deleteProduct(id: ID!): Boolean
+    updateProduct(
+        id: ID!
+        name: String
+        images: [String]
+        description: String
+        price: Float
+    ): Product
+
+    # User Mutations
+    createUser(email: String!, password: String!, name: String): User!
+    login(email: String!, password: String!): AuthPayload!
+
+    # CartItem Mutations
+    addToCart(userId: ID!, productId: ID!, quantity: Int!): CartItem
+    removeFromCart(cartItemId: ID!): CartItem
+    clearCart(userId: ID!): Boolean
 }
