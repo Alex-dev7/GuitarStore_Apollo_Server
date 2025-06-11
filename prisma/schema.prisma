@@ -19,10 +19,19 @@ model Product {
   images      String[]    @default([])
   description String
   price       Float
+  color       String
+  condition   String
   createdAt   DateTime @default(now())
   cartItems   CartItem[]
+  category    Category   @relation(fields: [categoryId], references: [id])
+  categoryId  String
 }
 
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  products  Product[]
+}
 
 model User {
   id       String   @id @default(cuid())

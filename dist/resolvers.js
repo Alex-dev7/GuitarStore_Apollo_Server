@@ -20,16 +20,22 @@ export const resolvers = {
     Mutation: {
         // Product Mutations
         createProduct: async (_, args, context) => {
-            const { name, images, description, price, id, createdAt } = args;
+            const { name, images, description, price, color, condition, categoryId } = args;
             const newProduct = await context.prisma.product.create({
                 data: {
-                    id,
                     name,
                     images,
                     description,
                     price,
-                    createdAt,
-                }
+                    color,
+                    condition,
+                    category: {
+                        connect: { id: categoryId },
+                    },
+                },
+                include: {
+                    category: true,
+                },
             });
             return newProduct;
         },

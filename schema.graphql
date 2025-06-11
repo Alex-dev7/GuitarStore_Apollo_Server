@@ -29,7 +29,17 @@ type Product {
     images: [String]
     description: String!
     price: Float!
+    color: String
+    condition:   String!
     createdAt: String!
+    category:  Category!
+}
+
+# Category ------------------------------- Schema
+type Category {
+  id: ID!
+  name: String!
+  products: [Product!]!
 }
 
 # CartItem ------------------------------- Schema
@@ -42,7 +52,6 @@ type CartItem {
 }
 
 
-
 type Mutation {
     # Product Mutations
     createProduct(
@@ -50,6 +59,9 @@ type Mutation {
         images: [String]
         description: String!
         price: Float!
+        color: String
+        condition: String!
+        categoryId: ID!
     ): Product
     deleteProduct(id: ID!): Boolean
     updateProduct(
@@ -58,6 +70,9 @@ type Mutation {
         images: [String]
         description: String
         price: Float
+        color: String
+        condition: String
+        categoryId: ID
     ): Product
 
     # User Mutations
